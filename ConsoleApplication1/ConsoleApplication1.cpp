@@ -1,6 +1,89 @@
 ﻿#include "header.h"
 #include <iostream>
 
+
+//работа с ПАЛИТРОЙ
+Palette::Palette(int InitialCapacity) : size(0), capacity(InitialCapacity) {
+	pixels = new Pixel[capacity];
+}
+
+Palette::~Palette() {
+	delete[] pixels;
+}
+
+int Palette::GetSize() {
+	return size;
+}
+
+int Palette::GetCapacity() {
+	return capacity;
+}
+
+void Palette::Clear() {
+	size = 0;
+}
+
+//работа с ИЗОБРАЖЕНИЕМ
+Image::Image(int w, int h) : width(w), height(h) {
+	pixels = new Pixel* [height];
+	for (int i = 0; i < height; i++) {
+		pixels[i] = new Pixel[width];
+	}
+}
+Image::~Image() {
+	for (int i = 0; i < height; i++) {
+		delete[] pixels[i];
+	}
+	delete[] pixels;
+}
+
+int Image::GetHeight() {
+	return height;
+}
+
+int Image::GetWidth() {
+	return width;
+}
+
+Pixel Image::GetPixel(int x, int y) {
+	if (x >= 0 && x < width && y >= 0 && y < height) {
+		return pixels[y][x];
+	}
+	return Pixel();  // Возвращаем черный пиксель по умолчанию
+}
+
+
+void Image::Resize(int newWidth, int newHeight) {
+	Pixel** newPixels = new Pixel * [newHeight];
+	for (int i = 0; i < newHeight; i++) {
+		newPixels[i] = new Pixel[newWidth];
+	}
+
+	int minWidth = (newWidth < width) ? newWidth : width;
+	int minHeight = (newHeight < height) ? newHeight : height;
+
+	for (int y = 0; y < minHeight; y++) {
+		for (int x = 0; x < minWidth; x++) {
+			newPixels[y][x] = pixels[y][x];
+		}
+	}
+
+	for (int i = 0; i < height; i++) {
+		delete[] pixels[i];
+	}
+	delete[] pixels;
+
+	pixels = newPixels;
+	width = newWidth;
+	height = newHeight;
+}
+
+
+
+
+
+
+
 int main()
 {
     std::cout << "Hello World!\n";

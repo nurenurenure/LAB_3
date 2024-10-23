@@ -39,12 +39,10 @@ public:
 	~Palette();
 	int GetSize();
 	int GetCapacity();
-	int Clear();
+	void Clear();
 };
 
 class Filter {
-private:
-	int level;
 public:
 	void Apply(Image& image);
 };
@@ -72,4 +70,6 @@ public:
 	void ShowImageInfo();
 	void ResizeImage();
 };
+
+
 
