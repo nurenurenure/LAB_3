@@ -51,6 +51,11 @@ Pixel Image::GetPixel(int x, int y) {
 	}
 	return Pixel();  // Возвращаем черный пиксель по умолчанию
 }
+void Image::SetPixel(int x, int y, Pixel& pixel) {
+	if (x >= 0 && x < width && y >= 0 && y < height) {
+		pixels[y][x] = pixel;
+	}
+}
 
 
 void Image::Resize(int newWidth, int newHeight) {
@@ -94,6 +99,33 @@ int Pixel::GetGray() {
 }
 
 //работа с фильтрами
+void BlackAndWhite::Apply(Image& image) {
+	for (int y = 0; y < image.GetHeight(); y++) {
+		for (int x = 0; x < image.GetWidth(); x++) {
+			Pixel pixel = image.GetPixel(x, y);
+			int gray = pixel.GetGray();
+			Pixel grayPixel(gray, gray, gray);
+			image.SetPixel(x, y, grayPixel);
+		}
+	}
+}
+
+BrightnessFilter::BrightnessFilter(int level) : brightness(level) {}
+
+void BrightnessFilter::Apply(Image& image) {
+	for (int y = 0; y < image.GetHeight(); y++) {
+		for (int x = 0; x < image.GetWidth(); x++) {
+			Pixel pixel = image.GetPixel(x, y);
+
+			int r = std::max(0, std::min(255, pixel.GetR() + brightness));
+			int g = std::max(0, std::min(255, pixel.GetG() + brightness));
+			int b = std::max(0, std::min(255, pixel.GetB() + brightness));
+			Pixel newpixel(r, g, b);
+			image.SetPixel(x, y, newpixel);
+		}
+	}
+}
+
 
 
 

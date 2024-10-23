@@ -28,6 +28,7 @@ public:
 	int GetWidth();
 	Pixel GetPixel(int x, int y);
 	void Resize(int NewW, int NewH);
+	void SetPixel(int x, int y, Pixel& pixel);
 };
 
 class Palette {
@@ -61,6 +62,7 @@ public:
 	BrightnessFilter(int level);
 	void Apply(Image& image);
 };
+
 class PhotoEditor {
 private:
 	Image image;
@@ -69,7 +71,6 @@ private:
 public:
 	void ApplyFilter(Filter *filter);
 	void ShowImageInfo();
-	void ResizeImage();
 };
 
 
