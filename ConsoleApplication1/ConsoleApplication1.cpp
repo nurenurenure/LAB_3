@@ -99,7 +99,7 @@ int Pixel::GetGray() {
 }
 
 //работа с фильтрами
-void BlackAndWhite::Apply(Image& image) {
+void BlackAndWhite::Apply(Image image) {
 	for (int y = 0; y < image.GetHeight(); y++) {
 		for (int x = 0; x < image.GetWidth(); x++) {
 			Pixel pixel = image.GetPixel(x, y);
@@ -112,7 +112,7 @@ void BlackAndWhite::Apply(Image& image) {
 
 BrightnessFilter::BrightnessFilter(int level) : brightness(level) {}
 
-void BrightnessFilter::Apply(Image& image) {
+void BrightnessFilter::Apply(Image image) {
 	for (int y = 0; y < image.GetHeight(); y++) {
 		for (int x = 0; x < image.GetWidth(); x++) {
 			Pixel pixel = image.GetPixel(x, y);
@@ -136,6 +136,27 @@ void PhotoEditor::ShowImageInfo() {
 }
 
 
+//методы класса Gradient
+Gradient::Gradient(Pixel start, Pixel end) :StartColor(start), EndColor(end) {}
+Image Gradient::Apply(Image image) {
+		int width = image.GetWidth();
+		int height = image.GetHeight();
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				// Вычисляем отношение текущей позиции x к ширине изображения
+				float ratio = static_cast<float>(x) / (width - 1);
+
+				// Вычисляем цвета пикселей на основе отношения
+				int red = static_cast<int>(StartColor.GetR() + ratio * (EndColor.GetR() - StartColor.GetR()));
+				int green = static_cast<int>(StartColor.GetG() + ratio * (EndColor.GetG() - StartColor.GetG()));
+				int blue = static_cast<int>(StartColor.GetB() + ratio * (EndColor.GetB() - StartColor.GetB()));
+				Pixel newpixel(red, green, blue);
+
+				image.SetPixel(x, y, newpixel);
+			}
+		}
+		return image;
+}
 
 
 
