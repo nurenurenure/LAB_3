@@ -125,8 +125,15 @@ void BrightnessFilter::Apply(Image& image) {
 		}
 	}
 }
+//методы класса PhotoEditor
+void PhotoEditor::ApplyFilter(Filter* filter) {
+		filters[FilterCount++] = filter;
+		filter->Apply(image);
+}
 
-
+void PhotoEditor::ShowImageInfo() {
+	std::cout << "Image width: " << image.GetWidth() << ", height: " << image.GetHeight() << std::endl;
+}
 
 
 
