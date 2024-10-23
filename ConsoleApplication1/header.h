@@ -62,17 +62,14 @@ public:
 	BrightnessFilter(int level);
 	void Apply(Image& image);
 };
-
-class ResizeImage {
-public:
-	void Resize(Image& image, int newWidth, int newHeight);
-};
-
-
 class PhotoEditor {
 private:
 	Image image;
 	Filter** filters;
 	int FilterCount;
+public:
+	void ApplyFilter(Filter *filter);
+	void ShowImageInfo();
+	void ResizeImage();
 };
 
