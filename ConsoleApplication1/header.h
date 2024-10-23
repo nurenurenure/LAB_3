@@ -12,6 +12,7 @@ public:
 	void SetR(int r);
 	void SetG(int g);
 	void SetB(int b);
+	int GetGray();
 };
 
 class Image {

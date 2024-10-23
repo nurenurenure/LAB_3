@@ -78,6 +78,22 @@ void Image::Resize(int newWidth, int newHeight) {
 	height = newHeight;
 }
 
+//Работа с классом Pixel
+Pixel::Pixel(int r, int g, int b) : R(r), G(g), B(b) {}
+
+int Pixel::GetR() { return R; }
+int Pixel::GetG() { return G; }
+int Pixel::GetB() { return B; }
+
+void Pixel::SetR(int r) { R = r; }
+void Pixel::SetG(int g) { G = g; }
+void Pixel::SetB(int b) { B = b; }
+
+int Pixel::GetGray() {
+	return (R + G + B) / 3;
+}
+
+//работа с фильтрами
 
 
 
