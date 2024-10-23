@@ -46,12 +46,12 @@ public:
 
 class Filter {
 public:
-	void Apply(Image image);
+	Image Apply(Image image);
 };
 
 class BlackAndWhite {
 public:
-	void Apply(Image image);
+	Image Apply(Image image);
 };
 
 class BrightnessFilter : public Filter {
@@ -60,7 +60,7 @@ private:
 
 public:
 	BrightnessFilter(int level);
-	void Apply(Image image);
+	Image Apply(Image image);
 };
 
 class PhotoEditor {
@@ -69,7 +69,7 @@ private:
 	Filter** filters;
 	int FilterCount;
 public:
-	void ApplyFilter(Filter *filter);
+	void ApplyFilter(Filter* filter);
 	void ShowImageInfo();
 };
 

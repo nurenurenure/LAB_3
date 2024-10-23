@@ -99,7 +99,7 @@ int Pixel::GetGray() {
 }
 
 //работа с фильтрами
-void BlackAndWhite::Apply(Image image) {
+Image BlackAndWhite::Apply(Image image) {
 	for (int y = 0; y < image.GetHeight(); y++) {
 		for (int x = 0; x < image.GetWidth(); x++) {
 			Pixel pixel = image.GetPixel(x, y);
@@ -108,11 +108,12 @@ void BlackAndWhite::Apply(Image image) {
 			image.SetPixel(x, y, grayPixel);
 		}
 	}
+	return image;
 }
 
 BrightnessFilter::BrightnessFilter(int level) : brightness(level) {}
 
-void BrightnessFilter::Apply(Image image) {
+Image BrightnessFilter::Apply(Image image) {
 	for (int y = 0; y < image.GetHeight(); y++) {
 		for (int x = 0; x < image.GetWidth(); x++) {
 			Pixel pixel = image.GetPixel(x, y);
@@ -124,13 +125,9 @@ void BrightnessFilter::Apply(Image image) {
 			image.SetPixel(x, y, newpixel);
 		}
 	}
+	return image;
 }
 //методы класса PhotoEditor
-void PhotoEditor::ApplyFilter(Filter* filter) {
-		filters[FilterCount++] = filter;
-		filter->Apply(image);
-}
-
 void PhotoEditor::ShowImageInfo() {
 	std::cout << "Image width: " << image.GetWidth() << ", height: " << image.GetHeight() << std::endl;
 }
@@ -161,17 +158,81 @@ Image Gradient::Apply(Image image) {
 
 
 int main()
-{
-    std::cout << "Hello World!\n";
+{    // Пример использования new и delete
+	// Создаем объект Pixel с помощью new
+	Pixel* p1 = new Pixel(255, 0, 0);
+	std::cout << "Pixel p1: Red = " << p1->GetR() << ", Green = " << p1->GetG() << ", Blue = " << p1->GetB() << std::endl;
+	// Удаляем объект Pixel с помощью delete
+	delete p1;
+
+
+// Пример использования new[] и delete[] для работы с массивами
+
+// Создаем массив пикселей с помощью new[]
+	Pixel* pixelArray = new Pixel[3];
+	pixelArray[0] = Pixel(255, 0, 0); 
+	pixelArray[1] = Pixel(0, 255, 0);  
+	pixelArray[2] = Pixel(0, 0, 255);  
+
+	std::cout << "Pixel array:" << std::endl;
+	for (int i = 0; i < 3; i++) {
+		std::cout << "Pixel " << i << ": Red = " << pixelArray[i].GetR()
+			<< ", Green = " << pixelArray[i].GetG()
+			<< ", Blue = " << pixelArray[i].GetB() << std::endl;
+	}
+
+
+	delete[] pixelArray;
+
+	// Работа со ссылками
+	Image* image = new Image(1, 2); 
+
+	// Устанавливаем пиксели
+	Pixel pixel1(100, 100, 100);
+	Pixel pixel2(50, 50, 50);
+	image->SetPixel(0, 0, pixel1);   
+	image->SetPixel(0, 1, pixel2);             
+
+	std::cout << "Image size: " << image->GetWidth() << "x" << image->GetHeight() << std::endl;
+
+
+	delete image;
+
+	// Динамический массив объектов класса Pixel
+	int numPixels = 3;
+	Pixel* pixelArray2 = new Pixel[numPixels];
+
+	pixelArray2[0] = Pixel(255, 0, 0); 
+	pixelArray2[1] = Pixel(0, 255, 0);  
+	pixelArray2[2] = Pixel(0, 0, 255);  
+
+
+	for (int i = 0; i < numPixels; i++) {
+		std::cout << "Pixel " << i << ": Red = " << pixelArray2[i].GetR()
+			<< ", Green = " << pixelArray2[i].GetG()
+			<< ", Blue = " << pixelArray2[i].GetB() << std::endl;
+	}
+	delete[] pixelArray2;
+
+
+	// Массив динамических объектов класса Pixel
+	Pixel** dynamicPixelArray = new Pixel * [numPixels];  // Массив указателей на Pixel
+
+	// Создаем объекты динамически
+	dynamicPixelArray[0] = new Pixel(255, 255, 0); 
+	dynamicPixelArray[1] = new Pixel(255, 0, 255);  
+	dynamicPixelArray[2] = new Pixel(0, 255, 255);  
+
+	for (int i = 0; i < numPixels; i++) {
+		std::cout << "Pixel " << i << ": Red = " << dynamicPixelArray[i]->GetR()
+			<< ", Green = " << dynamicPixelArray[i]->GetG()
+			<< ", Blue = " << dynamicPixelArray[i]->GetB() << std::endl;
+	}
+
+	// Удаляем каждый динамически созданный объект
+	for (int i = 0; i < numPixels; i++) {
+		delete dynamicPixelArray[i];
+	}
+
+	delete[] dynamicPixelArray;
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
