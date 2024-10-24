@@ -99,7 +99,7 @@ int Pixel::GetGray() {
 }
 
 //работа с фильтрами
-Image BlackAndWhite::Apply(Image image) {
+Image BlackAndWhiteFilter::Apply(Image image) {
 	for (int y = 0; y < image.GetHeight(); y++) {
 		for (int x = 0; x < image.GetWidth(); x++) {
 			Pixel pixel = image.GetPixel(x, y);

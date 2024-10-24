@@ -20,7 +20,6 @@ private:
 	int width;
 	int height;
 	Pixel** pixels;
-	int hello;
 public:
 	Image(int width, int height);
 	~Image();
@@ -49,7 +48,7 @@ public:
 	Image Apply(Image image);
 };
 
-class BlackAndWhite {
+class BlackAndWhiteFilter: public Filter {
 public:
 	Image Apply(Image image);
 };
